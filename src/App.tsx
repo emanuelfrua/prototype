@@ -10,6 +10,7 @@ import { directionsUrl, filterPlaces, mapEmbedUrl } from './domain/place'
 import type { Place, PlaceFilters } from './domain/place'
 import { DatePlanner } from './components/DatePlanner'
 import { OpeningHours } from './components/OpeningHours'
+import { regionalPhotos } from './data/placePhotos'
 
 const repository = createPlanRepository()
 const placeFavoritesStorageKey = 'plan-a-dos:place-favorites'
@@ -249,13 +250,24 @@ function App() {
         <p className="places__count">{visiblePlaces.length} opciones encontradas</p>
         <div className="places__layout">
           <div className="place-list">
-            {visiblePlaces.map((place) => (
+            {visiblePlaces.map((place) => {
+              const photo = regionalPhotos[place.region]
+              return (
               <article className="place-card" key={place.id}>
-                <img
-                  className="place-card__preview"
-                  src={`${import.meta.env.BASE_URL}preview-${place.category === 'comer' ? 'food' : place.category === 'compras' ? 'shopping' : 'visit'}.svg`}
-                  alt=""
-                />
+                {photo ? (
+                  <figure className="place-card__photo">
+                    <img src={photo.src} alt={photo.alt} loading="lazy" />
+                    <figcaption>
+                      Foto: {photo.author}, <a href={photo.sourceUrl} target="_blank" rel="noreferrer">Wikimedia Commons ({photo.license})</a>
+                    </figcaption>
+                  </figure>
+                ) : (
+                  <img
+                    className="place-card__preview"
+                    src={`${import.meta.env.BASE_URL}preview-${place.category === 'comer' ? 'food' : place.category === 'compras' ? 'shopping' : 'visit'}.svg`}
+                    alt=""
+                  />
+                )}
                 <p className="place-card__meta">{place.locality} · {place.priceLabel}</p>
                 <h3>{place.name}</h3>
                 <p>{place.description}</p>
@@ -270,7 +282,8 @@ function App() {
                   {place.officialUrl && <a href={place.officialUrl} target="_blank" rel="noreferrer">Info oficial</a>}
                 </div>
               </article>
-            ))}
+              )
+            })}
           </div>
           <aside className="map-panel" aria-label={`Mapa de ${selectedPlace.name}`}>
             <iframe src={mapEmbedUrl(selectedPlace)} title={`Mapa de ${selectedPlace.name}`} loading="lazy" />

@@ -54,6 +54,10 @@ form > button { align-self: end; background: #234637; color: #fff; }
 .place-list { display: grid; gap: .85rem; }
 .place-card { background: #fffdf9; border: 1px solid #e8dfd3; border-radius: 12px; padding: 1.25rem; }
 .place-card__preview { border-radius: 8px; display: block; height: 130px; margin: -1.25rem -1.25rem 1.1rem; object-fit: cover; width: calc(100% + 2.5rem); }
+.place-card__photo { margin: -1.25rem -1.25rem 1.1rem; }
+.place-card__photo img { border-radius: 8px 8px 0 0; display: block; height: 180px; object-fit: cover; width: 100%; }
+.place-card__photo figcaption { background: #f1ece2; color: #526057; font-family: Arial, sans-serif; font-size: .68rem; line-height: 1.35; padding: .45rem .65rem; }
+.place-card__photo figcaption a { color: #385044; }
 .place-card h3 { font-size: 1.35rem; margin-bottom: .55rem; }
 .place-card p { color: #526057; line-height: 1.45; }
 .place-card__meta { color: #a74b2d !important; font-family: Arial, sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
