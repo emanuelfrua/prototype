@@ -46,12 +46,14 @@ form > button { align-self: end; background: #234637; color: #fff; }
 .places { border-top: 1px solid #d9d2c7; padding: 3.5rem 0; }
 .places__heading { display: flex; flex-direction: column; gap: 1rem; }
 .places__heading > div > p:last-child { color: #526057; line-height: 1.5; max-width: 620px; }
-.place-filters { display: grid; gap: .75rem; width: 100%; }
+.place-filters { background: #e8f0e7; border-radius: 12px; display: grid; gap: .75rem; padding: 1rem; width: 100%; }
 .place-filters label { max-width: 230px; }
+.place-filter-city { color: #234637; font-size: .9rem; }
 .places__count { color: #526057; font-family: Arial, sans-serif; font-size: .85rem; margin: 1.25rem 0 0; }
 .places__layout { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
 .place-list { display: grid; gap: .85rem; }
 .place-card { background: #fffdf9; border: 1px solid #e8dfd3; border-radius: 12px; padding: 1.25rem; }
+.place-card__preview { border-radius: 8px; display: block; height: 130px; margin: -1.25rem -1.25rem 1.1rem; object-fit: cover; width: calc(100% + 2.5rem); }
 .place-card h3 { font-size: 1.35rem; margin-bottom: .55rem; }
 .place-card p { color: #526057; line-height: 1.45; }
 .place-card__meta { color: #a74b2d !important; font-family: Arial, sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }

@@ -214,8 +214,8 @@ function App() {
             <p>Ideas curadas en Buenos Aires y la Triple Frontera. Los precios son orientativos: confirmen siempre antes de salir.</p>
           </div>
           <div className="place-filters">
-            <label>
-              Destino
+            <label className="place-filter-city">
+              Elegí ciudad o destino
               <select value={placeFilters.region} onChange={(event) => setPlaceFilters((current) => ({ ...current, region: event.target.value as PlaceFilters['region'] }))}>
                 <option value="todas">Todos los destinos</option>
                 <option value="buenos-aires">Buenos Aires</option>
@@ -251,6 +251,11 @@ function App() {
           <div className="place-list">
             {visiblePlaces.map((place) => (
               <article className="place-card" key={place.id}>
+                <img
+                  className="place-card__preview"
+                  src={`${import.meta.env.BASE_URL}preview-${place.category === 'comer' ? 'food' : place.category === 'compras' ? 'shopping' : 'visit'}.svg`}
+                  alt=""
+                />
                 <p className="place-card__meta">{place.locality} · {place.priceLabel}</p>
                 <h3>{place.name}</h3>
                 <p>{place.description}</p>
