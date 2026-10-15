@@ -49,6 +49,22 @@ const activityDetails: Record<string, Pick<Place, 'description' | 'recommendatio
     description: 'Un espacio junto al río con vistas a los tres países, propuestas culturales y un paseo al aire libre.',
     recommendation: 'Consulten la agenda y el horario de apertura; el atardecer suele ser un buen momento para ir.',
   },
+  'macuco-safari': {
+    description: 'Una excursión dentro del Parque Nacional do Iguaçu que combina recorrido por la selva y navegación cerca de las Cataratas.',
+    recommendation: 'La navegación puede mojarles; consulten edad mínima, accesibilidad, reservas y condiciones del paseo.',
+  },
+  'yup-star': {
+    description: 'Una vuelta en la rueda panorámica para ver Foz do Iguaçu desde las alturas.',
+    recommendation: 'Consulten horarios, entradas y condiciones de funcionamiento antes de ir.',
+  },
+  'blue-park': {
+    description: 'Un parque acuático para pasar el día entre piscinas y atracciones, especialmente en jornadas calurosas.',
+    recommendation: 'Revisen calendario, entradas y reglas de acceso; algunas atracciones pueden tener restricciones.',
+  },
+  kattamaram: {
+    description: 'Un paseo en barco por los ríos de la zona para disfrutar el paisaje de la Triple Frontera desde el agua.',
+    recommendation: 'Consulten salidas, duración, clima y disponibilidad de reserva antes de acercarse al puerto.',
+  },
   'itaipu-py': {
     description: 'Conozcan la central hidroeléctrica y su historia desde el lado paraguayo, en Hernandarias.',
     recommendation: 'Consulten qué visitas están disponibles y reserven con anticipación.',
@@ -128,8 +144,8 @@ export const regionalPlaces: Place[] = [
   place('itaipu-br', 'Itaipu Binacional', 'foz', 'visitar', 'Brasil', 'Foz do Iguaçu', 'Av. Tancredo Neves 6702', -25.4082, -54.5892, 'medio', 'https://www.itaipu.gov.br/visitas'),
   place('marco-br', 'Marco das Tres Fronteiras', 'foz', 'visitar', 'Brasil', 'Foz do Iguaçu', 'Av. General Meira', -25.595, -54.59, 'medio'),
   place('macuco-safari', 'Macuco Safari', 'foz', 'visitar', 'Brasil', 'Foz do Iguaçu', 'Parque Nacional do Iguaçu, BR-469 km 25', -25.65, -54.44, 'alto', 'https://www.macucosafari.com.br/'),
-  place('yup-star', 'Yup Star Foz', 'foz', 'visitar', 'Brasil', 'Foz do Iguaçu', 'Rua José Maria de Brito 1350', -25.54, -54.57, 'medio', 'https://yupstar.com.br/'),
-  place('blue-park', 'Blue Park', 'foz', 'visitar', 'Brasil', 'Foz do Iguaçu', 'Rua José Maria de Brito 1350', -25.54, -54.57, 'alto', 'https://blueparkfoz.com.br/'),
+  place('yup-star', 'Yup Star Foz', 'foz', 'visitar', 'Brasil', 'Foz do Iguaçu', 'Av. das Cataratas 8100', -25.61, -54.49, 'medio', 'https://yupstar.com.br/'),
+  place('blue-park', 'Blue Park', 'foz', 'visitar', 'Brasil', 'Foz do Iguaçu', 'Av. das Cataratas 3175', -25.57, -54.55, 'alto', 'https://blueparkfoz.com.br/'),
   place('kattamaram', 'Paseo en barco Kattamaram', 'iguazu', 'visitar', 'Argentina', 'Puerto Iguazú', 'Puerto de Puerto Iguazú', -25.59, -54.57, 'alto', 'https://kattamaram.com/'),
   place('avenida-brasil', 'Avenida Brasil', 'foz', 'comer', 'Brasil', 'Foz do Iguaçu', 'Centro de Foz do Iguaçu', -25.545, -54.588, 'medio'),
   place('centro-foz', 'Centro de Foz do Iguaçu', 'foz', 'compras', 'Brasil', 'Foz do Iguaçu', 'Rua Almirante Barroso', -25.546, -54.588, 'medio'),
