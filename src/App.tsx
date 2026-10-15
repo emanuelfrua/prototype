@@ -10,7 +10,7 @@ import { directionsUrl, filterPlaces, mapEmbedUrl } from './domain/place'
 import type { Place, PlaceFilters } from './domain/place'
 import { DatePlanner } from './components/DatePlanner'
 import { OpeningHours } from './components/OpeningHours'
-import { regionalPhotos } from './data/placePhotos'
+import { loadTripleFrontierPlaces } from './data/osmPlaces'
 
 const repository = createPlanRepository()
 const placeFavoritesStorageKey = 'plan-a-dos:place-favorites'
@@ -47,6 +47,7 @@ function App() {
   })
   const [selectedPlace, setSelectedPlace] = useState<Place>(localPlaces[0])
   const [favoritePlaceIds, setFavoritePlaceIds] = useState<string[]>(() => loadFavoriteIds(placeFavoritesStorageKey))
+  const [osmPlaces, setOsmPlaces] = useState<Place[]>([])
 
   useEffect(() => {
     repository
@@ -57,12 +58,16 @@ function App() {
       })
       .catch(() => setStatus('error'))
   }, [])
+  useEffect(() => {
+    loadTripleFrontierPlaces().then(setOsmPlaces).catch(() => setOsmPlaces([]))
+  }, [])
 
   const favorites = useMemo(
     () => plans.filter((plan) => favoriteIds.includes(plan.id)),
     [favoriteIds, plans],
   )
-  const visiblePlaces = useMemo(() => filterPlaces(localPlaces, placeFilters), [placeFilters])
+  const allPlaces = useMemo(() => [...localPlaces, ...osmPlaces], [osmPlaces])
+  const visiblePlaces = useMemo(() => filterPlaces(allPlaces, placeFilters), [allPlaces, placeFilters])
 
   function updateFilter<K extends keyof PlanFilters>(key: K, value: PlanFilters[K]) {
     setFilters((current) => ({ ...current, [key]: value }))
@@ -251,24 +256,10 @@ function App() {
         <div className="places__layout">
           <div className="place-list">
             {visiblePlaces.map((place) => {
-              const photo = regionalPhotos[place.region]
               return (
               <article className="place-card" key={place.id}>
-                {photo ? (
-                  <figure className="place-card__photo">
-                    <img src={photo.src} alt={photo.alt} loading="lazy" />
-                    <figcaption>
-                      Foto: {photo.author}, <a href={photo.sourceUrl} target="_blank" rel="noreferrer">Wikimedia Commons ({photo.license})</a>
-                    </figcaption>
-                  </figure>
-                ) : (
-                  <img
-                    className="place-card__preview"
-                    src={`${import.meta.env.BASE_URL}preview-${place.category === 'comer' ? 'food' : place.category === 'compras' ? 'shopping' : 'visit'}.svg`}
-                    alt=""
-                  />
-                )}
-                <p className="place-card__meta">{place.locality} · {place.priceLabel}</p>
+                <img className="place-card__preview" src={`${import.meta.env.BASE_URL}preview-${place.category === 'comer' ? 'food' : place.category === 'compras' ? 'shopping' : 'visit'}.svg`} alt="" />
+                <p className="place-card__meta">{place.category === 'comer' ? '🍴 Comer y beber' : place.category === 'compras' ? '🛍 Compras' : '📍 Visitar'} · {place.locality} · {place.priceLabel}</p>
                 <h3>{place.name}</h3>
                 <p>{place.description}</p>
                 <p className="place-card__recommendation"><strong>Para ustedes:</strong> {place.recommendation}</p>
@@ -297,7 +288,7 @@ function App() {
         </div>
       </section>
 
-      <DatePlanner places={localPlaces} />
+      <DatePlanner places={allPlaces} />
 
       <section className="favorites" aria-labelledby="favorites-title">
         <p className="section-label">PARA DESPUES</p>
