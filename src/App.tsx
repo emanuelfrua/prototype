@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import './App.css'
 import { filterPlans, pickPlan } from './domain/plan'
@@ -44,7 +44,8 @@ function App() {
     category: 'todas',
     priceLevel: 'todas',
   })
-  const [selectedPlace, setSelectedPlace] = useState<Place>(localPlaces[0])
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
+  const mapPanelRef = useRef<HTMLElement>(null)
   const [favoritePlaceIds, setFavoritePlaceIds] = useState<string[]>(() => loadFavoriteIds(placeFavoritesStorageKey))
 
   useEffect(() => {
@@ -259,7 +260,7 @@ function App() {
                 <p className="place-card__recommendation"><strong>Para ustedes:</strong> {place.recommendation}</p>
                 <p className="place-card__price"><strong>Precio:</strong> {place.priceNote}</p>
                 <div className="place-card__actions">
-                  <button type="button" onClick={() => setSelectedPlace(place)}>Ver en mapa</button>
+                  <button type="button" onClick={() => { setSelectedPlace(place); setTimeout(() => mapPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50) }}>Ver en mapa</button>
                   <button type="button" aria-pressed={favoritePlaceIds.includes(place.id)} onClick={() => togglePlaceFavorite(place.id)}>
                     {favoritePlaceIds.includes(place.id) ? 'Guardado' : 'Guardar'}
                   </button>
@@ -270,8 +271,9 @@ function App() {
               )
             })}
           </div>
-          <aside className="map-panel" aria-label={`Mapa de ${selectedPlace.name}`}>
-            <iframe src={mapEmbedUrl(selectedPlace)} title={`Mapa de ${selectedPlace.name}`} loading="lazy" />
+          {selectedPlace && (
+          <aside className="map-panel" ref={mapPanelRef} aria-label={`Mapa de ${selectedPlace.name}`}>
+            <iframe src={mapEmbedUrl(selectedPlace)} title={`Mapa de ${selectedPlace.name}`} />
             <div>
               <strong>{selectedPlace.name}</strong>
               <span>{selectedPlace.address}</span>
@@ -279,6 +281,7 @@ function App() {
               <a href={directionsUrl(selectedPlace)} target="_blank" rel="noreferrer">Abrir direcciones</a>
             </div>
           </aside>
+          )}
         </div>
       </section>
 
