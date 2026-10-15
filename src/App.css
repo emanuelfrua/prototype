@@ -40,6 +40,25 @@ form > button { align-self: end; background: #234637; color: #fff; }
 .plan-card ol { line-height: 1.65; padding-left: 1.25rem; }
 .secondary-button { margin-top: 1.5rem; }
 
+.places { border-top: 1px solid #d9d2c7; padding: 3.5rem 0; }
+.places__heading { display: flex; flex-direction: column; gap: 1rem; }
+.places__heading > div > p:last-child { color: #526057; line-height: 1.5; max-width: 620px; }
+.places__heading label { max-width: 230px; }
+.places__layout { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+.place-list { display: grid; gap: .85rem; }
+.place-card { background: #fffdf9; border: 1px solid #e8dfd3; border-radius: 12px; padding: 1.25rem; }
+.place-card h3 { font-size: 1.35rem; margin-bottom: .55rem; }
+.place-card p { color: #526057; line-height: 1.45; }
+.place-card__meta { color: #a74b2d !important; font-family: Arial, sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.place-card__recommendation strong, .place-card__price strong { color: #24342c; }
+.place-card__actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
+.place-card__actions button, .place-card__actions a, .map-panel a { background: #edf2eb; color: #234637; font-family: Arial, sans-serif; font-size: .84rem; font-weight: 700; padding: .65rem .8rem; text-decoration: none; }
+.map-panel { align-self: start; background: #fffdf9; border: 1px solid #e8dfd3; border-radius: 12px; overflow: hidden; }
+.map-panel iframe { border: 0; display: block; height: 290px; width: 100%; }
+.map-panel div { display: grid; gap: .35rem; padding: 1rem; }
+.map-panel span { color: #526057; font-family: Arial, sans-serif; font-size: .85rem; }
+.map-panel a { justify-self: start; margin-top: .35rem; }
+
 .favorites { border-top: 1px solid #d9d2c7; padding-top: 2.5rem; }
 .favorites ul { list-style: none; margin: 1.5rem 0 0; padding: 0; }
 .favorites li { align-items: center; border-bottom: 1px solid #e3dbd0; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; }
@@ -52,4 +71,8 @@ form > button { align-self: end; background: #234637; color: #fff; }
   .planner form { grid-template-columns: repeat(3, 1fr); }
   .planner form > button { grid-column: span 3; justify-self: start; }
   .plan-card { padding: 2.5rem; }
+  .places__heading { align-items: end; flex-direction: row; justify-content: space-between; }
+  .places__layout { grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); }
+  .place-list { max-height: 650px; overflow-y: auto; padding-right: .5rem; }
+  .map-panel { position: sticky; top: 1.5rem; }
 }

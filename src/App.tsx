@@ -5,6 +5,9 @@ import { filterPlans, pickPlan } from './domain/plan'
 import type { Plan, PlanFilters } from './domain/plan'
 import { loadFavoriteIds, saveFavoriteIds } from './data/favorites'
 import { createPlanRepository } from './data/planRepository'
+import { localPlaces } from './data/places'
+import { directionsUrl, filterPlaces, mapEmbedUrl } from './domain/place'
+import type { Area, Place } from './domain/place'
 
 const repository = createPlanRepository()
 
@@ -33,6 +36,8 @@ function App() {
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [attempt, setAttempt] = useState(0)
   const [hasSearched, setHasSearched] = useState(false)
+  const [area, setArea] = useState<Area | 'todas'>('todas')
+  const [selectedPlace, setSelectedPlace] = useState<Place>(localPlaces[0])
 
   useEffect(() => {
     repository
@@ -48,6 +53,7 @@ function App() {
     () => plans.filter((plan) => favoriteIds.includes(plan.id)),
     [favoriteIds, plans],
   )
+  const visiblePlaces = useMemo(() => filterPlaces(localPlaces, area), [area])
 
   function updateFilter<K extends keyof PlanFilters>(key: K, value: PlanFilters[K]) {
     setFilters((current) => ({ ...current, [key]: value }))
@@ -177,6 +183,52 @@ function App() {
             </button>
           </article>
         )}
+      </section>
+
+      <section className="places" aria-labelledby="places-title">
+        <div className="places__heading">
+          <div>
+            <p className="section-label">PARA SALIR</p>
+            <h2 id="places-title">Lugares para una cita cerca.</h2>
+            <p>Ideas curadas en CABA y alrededores. Los precios son orientativos: confirmen siempre antes de salir.</p>
+          </div>
+          <label>
+            Zona
+            <select value={area} onChange={(event) => setArea(event.target.value as Area | 'todas')}>
+              <option value="todas">Todas las zonas</option>
+              <option value="caba">CABA</option>
+              <option value="norte">Zona Norte</option>
+              <option value="oeste">Zona Oeste</option>
+              <option value="sur">Zona Sur</option>
+            </select>
+          </label>
+        </div>
+        <div className="places__layout">
+          <div className="place-list">
+            {visiblePlaces.map((place) => (
+              <article className="place-card" key={place.id}>
+                <p className="place-card__meta">{place.locality} · {place.priceLabel}</p>
+                <h3>{place.name}</h3>
+                <p>{place.description}</p>
+                <p className="place-card__recommendation"><strong>Para ustedes:</strong> {place.recommendation}</p>
+                <p className="place-card__price"><strong>Precio:</strong> {place.priceNote}</p>
+                <div className="place-card__actions">
+                  <button type="button" onClick={() => setSelectedPlace(place)}>Ver en mapa</button>
+                  <a href={directionsUrl(place)} target="_blank" rel="noreferrer">Como llegar</a>
+                  {place.officialUrl && <a href={place.officialUrl} target="_blank" rel="noreferrer">Info oficial</a>}
+                </div>
+              </article>
+            ))}
+          </div>
+          <aside className="map-panel" aria-label={`Mapa de ${selectedPlace.name}`}>
+            <iframe src={mapEmbedUrl(selectedPlace)} title={`Mapa de ${selectedPlace.name}`} loading="lazy" />
+            <div>
+              <strong>{selectedPlace.name}</strong>
+              <span>{selectedPlace.address}</span>
+              <a href={directionsUrl(selectedPlace)} target="_blank" rel="noreferrer">Abrir direcciones</a>
+            </div>
+          </aside>
+        </div>
       </section>
 
       <section className="favorites" aria-labelledby="favorites-title">

@@ -30,3 +30,7 @@ El `base` de Vite se calcula automáticamente en GitHub Actions a partir del nom
 La interfaz usa un repositorio de planes intercambiable: por defecto consume el catálogo local de `src/data/plans.ts`. Para conectarla a una API, compila con `VITE_API_BASE_URL` apuntando al origen del servicio. El esqueleto y el contrato previsto están en [`api/`](api/README.md).
 
 GitHub Pages no ejecuta Go ni almacena datos. Cuando se active el backend, habrá que desplegar `api/` en un proveedor que admita servicios web y configurar CORS para el origen de GitHub Pages.
+
+## Lugares y mapas
+
+La sección de lugares recomienda sitios de CABA y alrededores con coste orientativo. Los importes, horarios y condiciones pueden variar, por lo que la app enlaza a la información oficial cuando está disponible. El mapa embebido usa OpenStreetMap sin clave de API y el botón de direcciones abre Google Maps con el destino seleccionado.
