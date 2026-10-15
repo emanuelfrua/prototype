@@ -1,0 +1,202 @@
+import { useEffect, useMemo, useState } from 'react'
+import type { FormEvent } from 'react'
+import './App.css'
+import { filterPlans, pickPlan } from './domain/plan'
+import type { Plan, PlanFilters } from './domain/plan'
+import { loadFavoriteIds, saveFavoriteIds } from './data/favorites'
+import { createPlanRepository } from './data/planRepository'
+
+const repository = createPlanRepository()
+
+const initialFilters: PlanFilters = {
+  mood: 'tranquilo',
+  budget: 'bajo',
+  duration: 'corto',
+}
+
+const labels = {
+  mood: {
+    tranquilo: 'Tranquilo',
+    aventurero: 'Aventurero',
+    romantico: 'Romantico',
+    creativo: 'Creativo',
+  },
+  budget: { bajo: 'Bajo', medio: 'Medio', alto: 'Alto' },
+  duration: { corto: 'Menos de 1 hora', medio: '1 a 3 horas', largo: 'Toda la tarde' },
+}
+
+function App() {
+  const [filters, setFilters] = useState<PlanFilters>(initialFilters)
+  const [plans, setPlans] = useState<Plan[]>([])
+  const [recommendation, setRecommendation] = useState<Plan | null>(null)
+  const [favoriteIds, setFavoriteIds] = useState<string[]>(loadFavoriteIds)
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [attempt, setAttempt] = useState(0)
+  const [hasSearched, setHasSearched] = useState(false)
+
+  useEffect(() => {
+    repository
+      .list()
+      .then((availablePlans) => {
+        setPlans(availablePlans)
+        setStatus('ready')
+      })
+      .catch(() => setStatus('error'))
+  }, [])
+
+  const favorites = useMemo(
+    () => plans.filter((plan) => favoriteIds.includes(plan.id)),
+    [favoriteIds, plans],
+  )
+
+  function updateFilter<K extends keyof PlanFilters>(key: K, value: PlanFilters[K]) {
+    setFilters((current) => ({ ...current, [key]: value }))
+  }
+
+  function findPlan(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const matchingPlans = filterPlans(plans, filters)
+    setRecommendation(pickPlan(matchingPlans, attempt))
+    setAttempt((current) => current + 1)
+    setHasSearched(true)
+  }
+
+  function showAnotherPlan() {
+    const matchingPlans = filterPlans(plans, filters)
+    setRecommendation(pickPlan(matchingPlans, attempt))
+    setAttempt((current) => current + 1)
+  }
+
+  function toggleFavorite(id: string) {
+    setFavoriteIds((current) => {
+      const next = current.includes(id)
+        ? current.filter((favoriteId) => favoriteId !== id)
+        : [...current, id]
+      saveFavoriteIds(next)
+      return next
+    })
+  }
+
+  return (
+    <main>
+      <header className="hero">
+        <p className="eyebrow">PLAN A DOS</p>
+        <h1>Una cita que encaje con ustedes.</h1>
+        <p className="intro">
+          Elijan como se sienten hoy y encuentren un plan simple para compartir.
+        </p>
+      </header>
+
+      <section className="planner" aria-labelledby="planner-title">
+        <div>
+          <p className="section-label">EMPECEMOS</p>
+          <h2 id="planner-title">¿Que les pinta hoy?</h2>
+        </div>
+        <form onSubmit={findPlan}>
+          <label>
+            Animo
+            <select
+              value={filters.mood}
+              onChange={(event) => updateFilter('mood', event.target.value as PlanFilters['mood'])}
+            >
+              {Object.entries(labels.mood).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Presupuesto
+            <select
+              value={filters.budget}
+              onChange={(event) => updateFilter('budget', event.target.value as PlanFilters['budget'])}
+            >
+              {Object.entries(labels.budget).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Tiempo
+            <select
+              value={filters.duration}
+              onChange={(event) => updateFilter('duration', event.target.value as PlanFilters['duration'])}
+            >
+              {Object.entries(labels.duration).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <button type="submit" disabled={status !== 'ready'}>Encontrar nuestro plan</button>
+        </form>
+      </section>
+
+      <section className="result" aria-live="polite" aria-labelledby="result-title">
+        {status === 'loading' && <p>Cargando ideas para ustedes...</p>}
+        {status === 'error' && (
+          <p role="alert">No pudimos cargar los planes. Intenten recargar la pagina.</p>
+        )}
+        {status === 'ready' && !recommendation && !hasSearched && (
+          <div className="empty-result">
+            <p className="section-label">SU MOMENTO</p>
+            <h2 id="result-title">Su proxima cita empieza aca.</h2>
+            <p>Completen las tres opciones y les proponemos una idea.</p>
+          </div>
+        )}
+        {status === 'ready' && !recommendation && hasSearched && (
+          <div className="empty-result">
+            <p className="section-label">SIN COINCIDENCIAS</p>
+            <h2 id="result-title">No encontramos un plan exacto.</h2>
+            <p>Prueben cambiar el presupuesto, el animo o el tiempo disponible.</p>
+          </div>
+        )}
+        {status === 'ready' && recommendation && (
+          <article className="plan-card">
+            <div className="plan-card__topline">
+              <p className="section-label">SU PLAN DE HOY</p>
+              <button
+                className="favorite-button"
+                type="button"
+                aria-pressed={favoriteIds.includes(recommendation.id)}
+                onClick={() => toggleFavorite(recommendation.id)}
+              >
+                {favoriteIds.includes(recommendation.id) ? 'Guardado' : 'Guardar'}
+              </button>
+            </div>
+            <h2 id="result-title">{recommendation.title}</h2>
+            <p className="plan-description">{recommendation.description}</p>
+            <dl>
+              <div><dt>Tiempo</dt><dd>{recommendation.durationLabel}</dd></div>
+              <div><dt>Presupuesto</dt><dd>{recommendation.budgetLabel}</dd></div>
+            </dl>
+            <h3>Como hacerlo</h3>
+            <ol>
+              {recommendation.steps.map((step) => <li key={step}>{step}</li>)}
+            </ol>
+            <button className="secondary-button" type="button" onClick={showAnotherPlan}>
+              Ver otra idea
+            </button>
+          </article>
+        )}
+      </section>
+
+      <section className="favorites" aria-labelledby="favorites-title">
+        <p className="section-label">PARA DESPUES</p>
+        <h2 id="favorites-title">Planes guardados</h2>
+        {favorites.length === 0 ? (
+          <p>Todavia no guardaron ningun plan.</p>
+        ) : (
+          <ul>
+            {favorites.map((plan) => (
+              <li key={plan.id}>
+                <div><strong>{plan.title}</strong><span>{plan.durationLabel} · {plan.budgetLabel}</span></div>
+                <button type="button" onClick={() => toggleFavorite(plan.id)}>Quitar</button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </main>
+  )
+}
+
+export default App

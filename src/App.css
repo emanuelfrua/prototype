@@ -1,0 +1,55 @@
+:root {
+  color: #24342c;
+  background: #f9f6ef;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; min-width: 320px; }
+
+button, select { font: inherit; }
+
+main { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+.hero { max-width: 670px; padding: 3rem 0 4rem; }
+.eyebrow, .section-label { color: #a74b2d; font-family: Arial, sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .14em; margin: 0 0 .75rem; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: clamp(2.7rem, 8vw, 5.4rem); font-weight: 400; letter-spacing: -.06em; line-height: .95; margin-bottom: 1.25rem; }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 400; letter-spacing: -.04em; line-height: 1; }
+h3 { font-size: 1.1rem; margin: 1.75rem 0 .5rem; }
+.intro, .plan-description, .empty-result > p:last-child { color: #526057; font-size: 1.1rem; line-height: 1.55; }
+
+.planner { background: #dae8dc; border-radius: 18px; padding: 1.5rem; }
+.planner form { display: grid; gap: 1rem; margin-top: 1.5rem; }
+label { display: grid; color: #385044; font-family: Arial, sans-serif; font-size: .8rem; font-weight: 700; gap: .35rem; }
+select { appearance: none; background: #fffdf9; border: 1px solid #abc0ae; border-radius: 8px; color: #24342c; padding: .8rem; }
+button { border: 0; border-radius: 8px; cursor: pointer; font-family: Arial, sans-serif; font-size: .9rem; font-weight: 700; padding: .9rem 1.1rem; }
+button:focus-visible, select:focus-visible { outline: 3px solid #d98662; outline-offset: 2px; }
+button:disabled { cursor: wait; opacity: .65; }
+form > button { align-self: end; background: #234637; color: #fff; }
+
+.result { min-height: 260px; padding: 4.5rem 0; }
+.empty-result { border-left: 2px solid #d98662; padding-left: 1.25rem; }
+.plan-card { background: #fffdf9; border: 1px solid #e8dfd3; border-radius: 18px; box-shadow: 0 16px 35px #b8ac9833; padding: 1.75rem; }
+.plan-card__topline { align-items: flex-start; display: flex; justify-content: space-between; gap: 1rem; }
+.favorite-button, .secondary-button { background: #f5e1d6; color: #884027; }
+.plan-card dl { border-block: 1px solid #eadfd3; display: grid; grid-template-columns: 1fr 1fr; margin: 1.75rem 0; padding: 1rem 0; }
+.plan-card dt { color: #68776d; font-family: Arial, sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; }
+.plan-card dd { margin: .35rem 0 0; }
+.plan-card ol { line-height: 1.65; padding-left: 1.25rem; }
+.secondary-button { margin-top: 1.5rem; }
+
+.favorites { border-top: 1px solid #d9d2c7; padding-top: 2.5rem; }
+.favorites ul { list-style: none; margin: 1.5rem 0 0; padding: 0; }
+.favorites li { align-items: center; border-bottom: 1px solid #e3dbd0; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; }
+.favorites span { color: #667369; display: block; font-family: Arial, sans-serif; font-size: .82rem; margin-top: .3rem; }
+.favorites li button { background: transparent; color: #a74b2d; padding: .25rem; text-decoration: underline; }
+
+@media (min-width: 680px) {
+  main { padding-inline: 2rem; }
+  .planner { padding: 2rem; }
+  .planner form { grid-template-columns: repeat(3, 1fr); }
+  .planner form > button { grid-column: span 3; justify-self: start; }
+  .plan-card { padding: 2.5rem; }
+}
