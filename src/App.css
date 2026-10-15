@@ -9,6 +9,7 @@
 body { margin: 0; min-width: 320px; }
 
 button, select { font: inherit; }
+input { font: inherit; }
 
 main { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
@@ -59,6 +60,17 @@ form > button { align-self: end; background: #234637; color: #fff; }
 .map-panel span { color: #526057; font-family: Arial, sans-serif; font-size: .85rem; }
 .map-panel a { justify-self: start; margin-top: .35rem; }
 
+.date-planner { background: #f0e4ce; border-radius: 18px; margin-bottom: 3.5rem; padding: 1.5rem; }
+.date-planner > div > p:last-child { color: #526057; line-height: 1.5; }
+.date-planner form { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.date-planner input { background: #fffdf9; border: 1px solid #cbbca4; border-radius: 8px; color: #24342c; padding: .8rem; }
+.date-planner form > button { background: #7d472b; color: #fff; justify-self: start; }
+.planned-dates { list-style: none; margin: 2rem 0 0; padding: 0; }
+.planned-dates li { align-items: center; border-top: 1px solid #d7c7ac; display: flex; gap: 1rem; justify-content: space-between; padding: 1rem 0; }
+.planned-dates span, .planned-dates small { color: #526057; display: block; font-family: Arial, sans-serif; font-size: .84rem; margin-top: .3rem; }
+.planned-dates div:last-child { display: flex; gap: .75rem; }
+.planned-dates a, .planned-dates button { background: transparent; color: #7d472b; font-size: .82rem; padding: .25rem; text-decoration: underline; }
+
 .favorites { border-top: 1px solid #d9d2c7; padding-top: 2.5rem; }
 .favorites ul { list-style: none; margin: 1.5rem 0 0; padding: 0; }
 .favorites li { align-items: center; border-bottom: 1px solid #e3dbd0; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; }
@@ -75,4 +87,7 @@ form > button { align-self: end; background: #234637; color: #fff; }
   .places__layout { grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); }
   .place-list { max-height: 650px; overflow-y: auto; padding-right: .5rem; }
   .map-panel { position: sticky; top: 1.5rem; }
+  .date-planner { padding: 2rem; }
+  .date-planner form { grid-template-columns: repeat(2, 1fr); }
+  .date-planner__note { grid-column: span 2; }
 }

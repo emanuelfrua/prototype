@@ -8,8 +8,10 @@ import { createPlanRepository } from './data/planRepository'
 import { localPlaces } from './data/places'
 import { directionsUrl, filterPlaces, mapEmbedUrl } from './domain/place'
 import type { Area, Place } from './domain/place'
+import { DatePlanner } from './components/DatePlanner'
 
 const repository = createPlanRepository()
+const placeFavoritesStorageKey = 'plan-a-dos:place-favorites'
 
 const initialFilters: PlanFilters = {
   mood: 'tranquilo',
@@ -38,6 +40,7 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false)
   const [area, setArea] = useState<Area | 'todas'>('todas')
   const [selectedPlace, setSelectedPlace] = useState<Place>(localPlaces[0])
+  const [favoritePlaceIds, setFavoritePlaceIds] = useState<string[]>(() => loadFavoriteIds(placeFavoritesStorageKey))
 
   useEffect(() => {
     repository
@@ -79,6 +82,16 @@ function App() {
         ? current.filter((favoriteId) => favoriteId !== id)
         : [...current, id]
       saveFavoriteIds(next)
+      return next
+    })
+  }
+
+  function togglePlaceFavorite(id: string) {
+    setFavoritePlaceIds((current) => {
+      const next = current.includes(id)
+        ? current.filter((favoriteId) => favoriteId !== id)
+        : [...current, id]
+      saveFavoriteIds(next, placeFavoritesStorageKey)
       return next
     })
   }
@@ -214,6 +227,9 @@ function App() {
                 <p className="place-card__price"><strong>Precio:</strong> {place.priceNote}</p>
                 <div className="place-card__actions">
                   <button type="button" onClick={() => setSelectedPlace(place)}>Ver en mapa</button>
+                  <button type="button" aria-pressed={favoritePlaceIds.includes(place.id)} onClick={() => togglePlaceFavorite(place.id)}>
+                    {favoritePlaceIds.includes(place.id) ? 'Guardado' : 'Guardar'}
+                  </button>
                   <a href={directionsUrl(place)} target="_blank" rel="noreferrer">Como llegar</a>
                   {place.officialUrl && <a href={place.officialUrl} target="_blank" rel="noreferrer">Info oficial</a>}
                 </div>
@@ -230,6 +246,8 @@ function App() {
           </aside>
         </div>
       </section>
+
+      <DatePlanner places={localPlaces} />
 
       <section className="favorites" aria-labelledby="favorites-title">
         <p className="section-label">PARA DESPUES</p>

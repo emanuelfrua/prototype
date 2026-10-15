@@ -34,3 +34,5 @@ GitHub Pages no ejecuta Go ni almacena datos. Cuando se active el backend, habr�
 ## Lugares y mapas
 
 La sección de lugares recomienda sitios de CABA y alrededores con coste orientativo. Los importes, horarios y condiciones pueden variar, por lo que la app enlaza a la información oficial cuando está disponible. El mapa embebido usa OpenStreetMap sin clave de API y el botón de direcciones abre Google Maps con el destino seleccionado.
+
+Además, cada pareja puede guardar lugares y agendar una cita con fecha, presupuesto y nota. Esos datos se conservan solo en el `localStorage` del navegador usado, sin enviarse a ningún servidor.
