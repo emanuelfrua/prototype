@@ -60,7 +60,8 @@ form > button { align-self: end; background: #234637; color: #fff; }
 .place-card__photo figcaption a { color: #385044; }
 .place-card h3 { font-size: 1.35rem; margin-bottom: .55rem; }
 .place-card p { color: #526057; line-height: 1.45; }
-.place-card__meta { color: #a74b2d !important; font-family: Arial, sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.place-card__meta { align-items: center; color: #a74b2d !important; display: flex; font-family: Arial, sans-serif; font-size: .75rem; font-weight: 700; gap: .45rem; letter-spacing: .05em; text-transform: uppercase; }
+.place-card__type-icon { align-items: center; background: #f5e1d6; border-radius: 50%; display: inline-flex; font-size: .9rem; height: 1.75rem; justify-content: center; letter-spacing: 0; width: 1.75rem; }
 .place-card__recommendation strong, .place-card__price strong { color: #24342c; }
 .place-card__actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1rem; }
 .place-card__actions button, .place-card__actions a, .map-panel a { background: #edf2eb; color: #234637; font-family: Arial, sans-serif; font-size: .84rem; font-weight: 700; padding: .65rem .8rem; text-decoration: none; }

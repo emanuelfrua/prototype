@@ -31,6 +31,12 @@ const labels = {
   duration: { corto: 'Menos de 1 hora', medio: '1 a 3 horas', largo: 'Toda la tarde' },
 }
 
+const placeCategoryInfo = {
+  visitar: { icon: '📍', label: 'Visitar', preview: 'visit' },
+  comer: { icon: '🍴', label: 'Comer y beber', preview: 'food' },
+  compras: { icon: '🛍️', label: 'Compras', preview: 'shopping' },
+}
+
 function App() {
   const [filters, setFilters] = useState<PlanFilters>(initialFilters)
   const [plans, setPlans] = useState<Plan[]>([])
@@ -251,10 +257,14 @@ function App() {
         <div className="places__layout">
           <div className="place-list">
             {visiblePlaces.map((place) => {
+              const categoryInfo = placeCategoryInfo[place.category]
               return (
               <article className="place-card" key={place.id}>
-                <img className="place-card__preview" src={`${import.meta.env.BASE_URL}preview-${place.category === 'comer' ? 'food' : place.category === 'compras' ? 'shopping' : 'visit'}.svg`} alt="" />
-                <p className="place-card__meta">{place.category === 'comer' ? '🍴 Comer y beber' : place.category === 'compras' ? '🛍 Compras' : '📍 Visitar'} · {place.locality} · {place.priceLabel}</p>
+                <img className="place-card__preview" src={`${import.meta.env.BASE_URL}preview-${categoryInfo.preview}.svg`} alt="" />
+                <p className="place-card__meta">
+                  <span className="place-card__type-icon" aria-hidden="true">{categoryInfo.icon}</span>
+                  {categoryInfo.label} · {place.locality} · {place.priceLabel}
+                </p>
                 <h3>{place.name}</h3>
                 <p>{place.description}</p>
                 <p className="place-card__recommendation"><strong>Para ustedes:</strong> {place.recommendation}</p>
@@ -265,7 +275,7 @@ function App() {
                     {favoritePlaceIds.includes(place.id) ? 'Guardado' : 'Guardar'}
                   </button>
                   <a href={directionsUrl(place)} target="_blank" rel="noreferrer">Como llegar</a>
-                  {place.officialUrl && <a href={place.officialUrl} target="_blank" rel="noreferrer">Info oficial</a>}
+                  {place.officialUrl && <a href={place.officialUrl} target="_blank" rel="noreferrer">Más información</a>}
                 </div>
               </article>
               )
