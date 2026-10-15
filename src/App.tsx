@@ -104,11 +104,14 @@ function App() {
   return (
     <main>
       <header className="hero">
-        <p className="eyebrow">PLAN A DOS</p>
-        <h1>Una cita que encaje con ustedes.</h1>
-        <p className="intro">
-          Elijan como se sienten hoy y encuentren un plan simple para compartir.
-        </p>
+        <div>
+          <p className="eyebrow">PLAN A DOS</p>
+          <h1>Una cita que encaje con ustedes.</h1>
+          <p className="intro">
+            Elijan como se sienten hoy y encuentren un plan simple para compartir.
+          </p>
+        </div>
+        <img src={`${import.meta.env.BASE_URL}iguazu-landscape.svg`} alt="Cataratas entre selva tropical al atardecer" />
       </header>
 
       <section className="planner" aria-labelledby="planner-title">

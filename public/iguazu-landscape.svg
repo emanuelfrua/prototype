@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustración de cataratas y selva</title>
+  <desc id="desc">Una cascada entre vegetación tropical al atardecer.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#f4bd79"/>
+      <stop offset="1" stop-color="#f8e7c9"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#dff4ef"/>
+      <stop offset="1" stop-color="#65b6b5"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#sky)"/>
+  <circle cx="620" cy="82" r="38" fill="#fff1c8"/>
+  <path d="M0 176C118 110 205 175 303 130c107-49 178 43 300 4 92-29 139-69 197-33v190H0Z" fill="#5b8d69"/>
+  <path d="M0 216c94-62 188-34 260-7 91 34 156-31 257-1 106 31 193-29 283 5v207H0Z" fill="#2e624e"/>
+  <path d="M205 148c49 10 90 4 130-19l-6 164c-36-17-79-17-126 3Z" fill="url(#water)"/>
+  <path d="M377 119c67 15 118 6 170-22l-12 202c-49-24-101-22-164 5Z" fill="url(#water)"/>
+  <path d="M0 310c168-26 271 18 402-2 139-22 261 31 398-10v122H0Z" fill="#1d4d43"/>
+  <path d="M0 363c183-22 310 21 466-4 111-18 206 12 334-3v64H0Z" fill="#143d39"/>
+  <g fill="#244f3f">
+    <circle cx="66" cy="185" r="46"/><circle cx="112" cy="202" r="54"/><circle cx="710" cy="180" r="57"/><circle cx="764" cy="215" r="54"/>
+  </g>
+  <g fill="#76a95f">
+    <circle cx="75" cy="169" r="24"/><circle cx="135" cy="178" r="28"/><circle cx="683" cy="162" r="25"/><circle cx="746" cy="177" r="31"/>
+  </g>
+</svg>
