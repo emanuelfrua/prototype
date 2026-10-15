@@ -10,7 +10,6 @@ import { directionsUrl, filterPlaces, mapEmbedUrl } from './domain/place'
 import type { Place, PlaceFilters } from './domain/place'
 import { DatePlanner } from './components/DatePlanner'
 import { OpeningHours } from './components/OpeningHours'
-import { loadTripleFrontierPlaces } from './data/osmPlaces'
 
 const repository = createPlanRepository()
 const placeFavoritesStorageKey = 'plan-a-dos:place-favorites'
@@ -47,7 +46,6 @@ function App() {
   })
   const [selectedPlace, setSelectedPlace] = useState<Place>(localPlaces[0])
   const [favoritePlaceIds, setFavoritePlaceIds] = useState<string[]>(() => loadFavoriteIds(placeFavoritesStorageKey))
-  const [osmPlaces, setOsmPlaces] = useState<Place[]>([])
 
   useEffect(() => {
     repository
@@ -58,16 +56,12 @@ function App() {
       })
       .catch(() => setStatus('error'))
   }, [])
-  useEffect(() => {
-    loadTripleFrontierPlaces().then(setOsmPlaces).catch(() => setOsmPlaces([]))
-  }, [])
 
   const favorites = useMemo(
     () => plans.filter((plan) => favoriteIds.includes(plan.id)),
     [favoriteIds, plans],
   )
-  const allPlaces = useMemo(() => [...localPlaces, ...osmPlaces], [osmPlaces])
-  const visiblePlaces = useMemo(() => filterPlaces(allPlaces, placeFilters), [allPlaces, placeFilters])
+  const visiblePlaces = useMemo(() => filterPlaces(localPlaces, placeFilters), [placeFilters])
 
   function updateFilter<K extends keyof PlanFilters>(key: K, value: PlanFilters[K]) {
     setFilters((current) => ({ ...current, [key]: value }))
@@ -288,7 +282,7 @@ function App() {
         </div>
       </section>
 
-      <DatePlanner places={allPlaces} />
+      <DatePlanner places={localPlaces} />
 
       <section className="favorites" aria-labelledby="favorites-title">
         <p className="section-label">PARA DESPUES</p>
