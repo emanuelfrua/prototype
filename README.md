@@ -33,6 +33,8 @@ GitHub Pages no ejecuta Go ni almacena datos. Cuando se active el backend, habr�
 
 ## Lugares y mapas
 
-La sección de lugares recomienda sitios de CABA y alrededores con coste orientativo. Los importes, horarios y condiciones pueden variar, por lo que la app enlaza a la información oficial cuando está disponible. El mapa embebido usa OpenStreetMap sin clave de API y el botón de direcciones abre Google Maps con el destino seleccionado.
+La sección de lugares recomienda sitios de Buenos Aires, Puerto Iguazú, Wanda, Foz do Iguaçu y Ciudad del Este con coste orientativo. Los importes, horarios y condiciones pueden variar, por lo que la app enlaza a la información oficial cuando está disponible. El mapa embebido usa OpenStreetMap sin clave de API y el botón de direcciones abre Google Maps con el destino seleccionado.
+
+Las opciones en Brasil y Paraguay requieren confirmar documentación, requisitos fronterizos, reservas y condiciones de ingreso con las autoridades y los prestadores oficiales antes de viajar.
 
 Además, cada pareja puede guardar lugares y agendar una cita con fecha, presupuesto y nota. Esos datos se conservan solo en el `localStorage` del navegador usado, sin enviarse a ningún servidor.

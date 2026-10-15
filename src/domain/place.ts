@@ -1,10 +1,19 @@
-export type Area = 'caba' | 'norte' | 'oeste' | 'sur'
+export type Region = 'buenos-aires' | 'iguazu' | 'wanda' | 'foz' | 'ciudad-del-este'
 export type PriceLevel = 'gratis' | 'bajo' | 'medio' | 'alto'
+export type PlaceCategory = 'visitar' | 'comer' | 'compras'
+
+export interface PlaceFilters {
+  region: Region | 'todas'
+  category: PlaceCategory | 'todas'
+  priceLevel: PriceLevel | 'todas'
+}
 
 export interface Place {
   id: string
   name: string
-  area: Area
+  region: Region
+  category: PlaceCategory
+  country: string
   locality: string
   address: string
   description: string
@@ -17,8 +26,13 @@ export interface Place {
   officialUrl?: string
 }
 
-export function filterPlaces(places: Place[], area: Area | 'todas'): Place[] {
-  return area === 'todas' ? places : places.filter((place) => place.area === area)
+export function filterPlaces(places: Place[], filters: PlaceFilters): Place[] {
+  return places.filter(
+    (place) =>
+      (filters.region === 'todas' || place.region === filters.region) &&
+      (filters.category === 'todas' || place.category === filters.category) &&
+      (filters.priceLevel === 'todas' || place.priceLevel === filters.priceLevel),
+  )
 }
 
 export function mapEmbedUrl(place: Place): string {

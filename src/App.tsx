@@ -7,7 +7,7 @@ import { loadFavoriteIds, saveFavoriteIds } from './data/favorites'
 import { createPlanRepository } from './data/planRepository'
 import { localPlaces } from './data/places'
 import { directionsUrl, filterPlaces, mapEmbedUrl } from './domain/place'
-import type { Area, Place } from './domain/place'
+import type { Place, PlaceFilters } from './domain/place'
 import { DatePlanner } from './components/DatePlanner'
 
 const repository = createPlanRepository()
@@ -38,7 +38,11 @@ function App() {
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [attempt, setAttempt] = useState(0)
   const [hasSearched, setHasSearched] = useState(false)
-  const [area, setArea] = useState<Area | 'todas'>('todas')
+  const [placeFilters, setPlaceFilters] = useState<PlaceFilters>({
+    region: 'todas',
+    category: 'todas',
+    priceLevel: 'todas',
+  })
   const [selectedPlace, setSelectedPlace] = useState<Place>(localPlaces[0])
   const [favoritePlaceIds, setFavoritePlaceIds] = useState<string[]>(() => loadFavoriteIds(placeFavoritesStorageKey))
 
@@ -56,7 +60,7 @@ function App() {
     () => plans.filter((plan) => favoriteIds.includes(plan.id)),
     [favoriteIds, plans],
   )
-  const visiblePlaces = useMemo(() => filterPlaces(localPlaces, area), [area])
+  const visiblePlaces = useMemo(() => filterPlaces(localPlaces, placeFilters), [placeFilters])
 
   function updateFilter<K extends keyof PlanFilters>(key: K, value: PlanFilters[K]) {
     setFilters((current) => ({ ...current, [key]: value }))
@@ -203,19 +207,42 @@ function App() {
           <div>
             <p className="section-label">PARA SALIR</p>
             <h2 id="places-title">Lugares para una cita cerca.</h2>
-            <p>Ideas curadas en CABA y alrededores. Los precios son orientativos: confirmen siempre antes de salir.</p>
+            <p>Ideas curadas en Buenos Aires y la Triple Frontera. Los precios son orientativos: confirmen siempre antes de salir.</p>
           </div>
-          <label>
-            Zona
-            <select value={area} onChange={(event) => setArea(event.target.value as Area | 'todas')}>
-              <option value="todas">Todas las zonas</option>
-              <option value="caba">CABA</option>
-              <option value="norte">Zona Norte</option>
-              <option value="oeste">Zona Oeste</option>
-              <option value="sur">Zona Sur</option>
-            </select>
-          </label>
+          <div className="place-filters">
+            <label>
+              Destino
+              <select value={placeFilters.region} onChange={(event) => setPlaceFilters((current) => ({ ...current, region: event.target.value as PlaceFilters['region'] }))}>
+                <option value="todas">Todos los destinos</option>
+                <option value="buenos-aires">Buenos Aires</option>
+                <option value="iguazu">Puerto Iguazu y Cataratas</option>
+                <option value="wanda">Wanda</option>
+                <option value="foz">Foz do Iguacu</option>
+                <option value="ciudad-del-este">Ciudad del Este</option>
+              </select>
+            </label>
+            <label>
+              Tipo
+              <select value={placeFilters.category} onChange={(event) => setPlaceFilters((current) => ({ ...current, category: event.target.value as PlaceFilters['category'] }))}>
+                <option value="todas">Todos</option>
+                <option value="visitar">Visitar</option>
+                <option value="comer">Comer y beber</option>
+                <option value="compras">Compras</option>
+              </select>
+            </label>
+            <label>
+              Precio
+              <select value={placeFilters.priceLevel} onChange={(event) => setPlaceFilters((current) => ({ ...current, priceLevel: event.target.value as PlaceFilters['priceLevel'] }))}>
+                <option value="todas">Todos los rangos</option>
+                <option value="gratis">Gratis</option>
+                <option value="bajo">Bajo</option>
+                <option value="medio">Medio</option>
+                <option value="alto">Alto</option>
+              </select>
+            </label>
+          </div>
         </div>
+        <p className="places__count">{visiblePlaces.length} opciones encontradas</p>
         <div className="places__layout">
           <div className="place-list">
             {visiblePlaces.map((place) => (

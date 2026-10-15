@@ -4,7 +4,11 @@ import { localPlaces } from '../data/places'
 
 describe('place explorer', () => {
   it('filters recommendations by area', () => {
-    expect(filterPlaces(localPlaces, 'norte').every((place) => place.area === 'norte')).toBe(true)
+    expect(filterPlaces(localPlaces, {
+      region: 'buenos-aires',
+      category: 'todas',
+      priceLevel: 'todas',
+    }).every((place) => place.region === 'buenos-aires')).toBe(true)
   })
 
   it('builds map and directions URLs from a place location', () => {
