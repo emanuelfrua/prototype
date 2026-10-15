@@ -9,6 +9,7 @@ import { localPlaces } from './data/places'
 import { directionsUrl, filterPlaces, mapEmbedUrl } from './domain/place'
 import type { Place, PlaceFilters } from './domain/place'
 import { DatePlanner } from './components/DatePlanner'
+import { OpeningHours } from './components/OpeningHours'
 
 const repository = createPlanRepository()
 const placeFavoritesStorageKey = 'plan-a-dos:place-favorites'
@@ -268,6 +269,7 @@ function App() {
             <div>
               <strong>{selectedPlace.name}</strong>
               <span>{selectedPlace.address}</span>
+              <OpeningHours place={selectedPlace} />
               <a href={directionsUrl(selectedPlace)} target="_blank" rel="noreferrer">Abrir direcciones</a>
             </div>
           </aside>
