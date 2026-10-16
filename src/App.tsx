@@ -295,6 +295,47 @@ function App() {
         </div>
       </section>
 
+      <section className="brazil-guide" aria-labelledby="brazil-guide-title">
+        <p className="section-label">LADO BRASILEÑO</p>
+        <h2 id="brazil-guide-title">Guía rápida para Foz do Iguaçu.</h2>
+        <p className="brazil-guide__intro">
+          Para cruzar a Brasil, revisen antes los requisitos fronterizos vigentes y los horarios de cada lugar.
+        </p>
+        <div className="brazil-guide__grid">
+          <article>
+            <h3>Para comer</h3>
+            <ul>
+              <li>Recorran la Avenida Brasil y elijan un restaurante con menú y precios claros; prueben churrasco, pão de queijo o coxinha.</li>
+              <li>Rafain es una opción para cenar con espectáculo: consulten menú, función y reserva antes de ir.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Para visitar</h3>
+            <ul>
+              <li>Parque Nacional do Iguaçu, para las vistas panorámicas de las Cataratas.</li>
+              <li>Parque das Aves, Itaipu y el Marco das Três Fronteiras para sumar naturaleza, historia y atardecer.</li>
+              <li>Confirmen entradas, horarios y traslados en los canales oficiales.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Mejor evitar</h3>
+            <ul>
+              <li>Senderos cerrados o salir de las pasarelas; respeten las indicaciones del parque y no alimenten a los animales.</li>
+              <li>Transportes y excursiones no autorizados, especialmente si ofrecen entradas o cruces fronterizos por fuera de los canales oficiales.</li>
+              <li>Cruzar sin verificar la documentación requerida para cada viajero.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Qué llevar</h3>
+            <ul>
+              <li>Documentación vigente y requisitos fronterizos confirmados para todos.</li>
+              <li>Calzado cómodo, protector solar, repelente y agua.</li>
+              <li>Impermeable liviano y una bolsa impermeable para el celular: puede llover o salpicarlos.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
       <DatePlanner places={localPlaces} />
 
       <section className="favorites" aria-labelledby="favorites-title">
