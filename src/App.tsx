@@ -295,6 +295,47 @@ function App() {
         </div>
       </section>
 
+      <section className="brazil-guide" aria-labelledby="brazil-guide-title">
+        <p className="section-label">DEL LADO BRASILEÑO</p>
+        <h2 id="brazil-guide-title">Ideas y consejos para Foz do Iguaçu.</h2>
+        <p className="brazil-guide__intro">
+          Una guía rápida para elegir qué hacer y salir preparados. Revisen horarios, clima y requisitos de cruce antes de viajar.
+        </p>
+        <div className="brazil-guide__grid">
+          <article>
+            <h3>Para comer</h3>
+            <ul>
+              <li><strong>Avenida Brasil:</strong> recorran la zona céntrica para encontrar cafés y opciones variadas; miren el menú y los precios antes de sentarse.</li>
+              <li><strong>Rafain Churrascaria Show:</strong> una cena con espectáculo para una salida especial; consulten menú, función y reserva.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Para visitar</h3>
+            <ul>
+              <li><strong>Parque Nacional do Iguaçu:</strong> imperdible por sus vistas panorámicas de las Cataratas; compren entradas y revisen horarios con anticipación.</li>
+              <li><strong>Parque das Aves:</strong> una visita cercana para conocer aves de la Mata Atlántica.</li>
+              <li><strong>Itaipu y Marco das Três Fronteiras:</strong> buenas alternativas para sumar una visita guiada o disfrutar el atardecer.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Qué conviene evitar</h3>
+            <ul>
+              <li>Caminar de noche por zonas aisladas o poco iluminadas; planifiquen el regreso y usen transporte habilitado.</li>
+              <li>Contratar excursiones o traslados sin confirmar quién los ofrece, qué incluyen y el precio total.</li>
+              <li>Acercarse o dar comida a animales silvestres, y salir sin revisar el clima o el estado de los paseos.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Qué llevar</h3>
+            <ul>
+              <li>Documentación vigente y lo necesario para cruzar la frontera; confirmen los requisitos para su caso.</li>
+              <li>Calzado cómodo, ropa liviana, piloto o protección para lluvia, protector solar y repelente.</li>
+              <li>Agua, una funda impermeable para el celular y un medio de pago alternativo.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
       <DatePlanner places={localPlaces} />
 
       <section className="favorites" aria-labelledby="favorites-title">
